@@ -269,10 +269,8 @@ a.go {
 
 // Hide hero image on smaller viewports
 @media only screen and (max-width: @breakTablet) {
-    .section-ask .content {
-        img {
-            display: none;
-        }
+    .smarton-hero {
+        display: none;
     }
 }
 
@@ -325,10 +323,16 @@ a.go {
     }
 
     .series-link {
-        display: none; // hidden until there is a landing page
         .span(3);
         float: right;
         text-align: center;
+
+        @media only screen and (max-width: @breakDesktop) {
+            float: none;
+            width: auto;
+            text-align: left;
+            margin: @baseLine 0;
+        }
 
         a {
             .trailing-arrow();
@@ -354,7 +358,10 @@ a.go {
     }
 }
 
-
+// Hide the series link on the landing page
+.landing .smarton-header .series-link {
+    display: none;
+}
 
 /* -------------------------------------------------------------------------- */
 // Header for the specific SmartOn page
@@ -1426,18 +1433,77 @@ body.not-firefox .footer-cta {
     .border-box;
     width: @widthDesktop;
     list-style: none;
-    margin: 2em auto;
+    margin: (@baseLine * 2) auto (@baseLine * 4);
     padding: 0 (@gridColumnWidth * 2);
     text-align: center;
     .clearfix;
 
-    > li {
+    @media only screen and (max-width: @breakDesktop) {
+        width: @widthTablet;
+        padding: 0;
+    }
+
+    @media only screen and (max-width: @breakTablet) {
+        width: auto;
+    }
+
+    .topic {
         .span(3);
         .border-box;
-        padding: 20px;
+        position: relative;
+        height: 360px;
+        padding: 20px 20px 120px;
+        background-position: center bottom;
+        background-repeat: no-repeat;
 
         &:before {
             content: '';
+        }
+
+        .topic-title {
+            .font-size(28px);
+            .transition(margin-top .25s ease);
+            margin-top: 60px;
+            position: relative;
+            z-index: 3;
+        }
+
+        .inner {
+            .border-box;
+            display: block;
+            height: 100%;
+            width: 100%;
+            opacity: 0;
+            padding: 150px 20px 20px;
+            position: absolute;
+            top: 0;
+            left: 0;
+            z-index: 3;
+            @transition: opacity .25s ease, padding-top .25s ease;
+            .transition(@transition);
+
+            h3 {
+                .font-size(20px);
+            }
+        }
+
+        .shape {
+            position: absolute;
+            left: 0;
+            top: 0;
+            right: 0;
+            z-index: 2;
+        }
+    }
+
+    .hover {
+        .topic-title {
+            margin-top: 0;
+        }
+
+        .inner {
+            opacity: 1;
+            padding-top: 120px;
         }
     }
 
@@ -1447,15 +1513,50 @@ body.not-firefox .footer-cta {
     }
 
     .topic-tracking {
-        background: @theme-tracking;
+        background-color: @theme-tracking;
+        .at2x('/media/img/teach/smarton/tracking/hero-tracking-small.png', 100px, 100px);
+
+        .shape path {
+            fill: @theme-tracking-dark;
+        }
     }
 
     .topic-security {
-        background: @theme-security;
+        background-color: @theme-security;
+        .at2x('/media/img/teach/smarton/security/hero-cybersecurity-small.png', 130px, 116px);
+
+        .shape path {
+            fill: @theme-security-dark;
+        }
     }
 
     .topic-surveillance {
-        background: @theme-surveillance;
+        background-color: @theme-surveillance;
+        .at2x('/media/img/teach/smarton/surveillance/hero-surveillance-small.png', 130px, 88px);
+
+        .shape path {
+            fill: @theme-surveillance-dark;
+        }
+    }
+}
+
+@media only screen and (max-width: @breakTablet) {
+    .smarton-topics .topic {
+        float: none;
+        margin: 0 auto @baseLine;
+
+        .shape {
+            display: none;
+        }
+
+        .topic-title {
+            margin-top: 40px;
+        }
+
+        .inner {
+            padding-top: 120px;
+            opacity: 1;
+        }
     }
 }
 
@@ -1469,12 +1570,11 @@ body.not-firefox .footer-cta {
     h2 {
         .font-size(36px);
         font-style: italic;
-        font-weight: bold;
     }
 
     .smarton-steps {
+        width: 100%;
         list-style: none;
-        width: (@gridColumnWidth * 5) + (@gridGutterWidth * 4);
         margin: @baseLine auto;
         .font-size(20px);
         .flexbox;
@@ -1488,9 +1588,9 @@ body.not-firefox .footer-cta {
             &:after {
                 content: '\27A1';
                 position: absolute;
-                right: -15px;
+                right: -20px;
                 top: 0;
-                color: @mozIDGrey;
+                color: lighten(@mozIDGrey, 20%);
             }
 
             &:last-child:after {

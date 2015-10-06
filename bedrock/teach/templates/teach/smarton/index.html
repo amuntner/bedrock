@@ -1,0 +1,64 @@
+{# This Source Code Form is subject to the terms of the Mozilla Public
+ # License, v. 2.0. If a copy of the MPL was not distributed with this
+ # file, You can obtain one at http://mozilla.org/MPL/2.0/. -#}
+
+{% extends "teach/smarton/base.html" %}
+
+{% block page_title %}{{ _('Get smart on the Web') }}{% endblock %}
+{% block page_desc %}{{ _('The SmartOn Series is like your Internet owner’s manual: the place to learn the most useful intel and tips from Mozilla policy peeps and programmers.') }}{% endblock %}
+{% block body_id %}smarton-landing{% endblock %}
+{% block body_class %}smarton landing{% endblock %}
+
+{% block smarton_content %}
+<main role="main" class="section">
+  <div class="content">
+
+    <ul class="smarton-topics">
+      <li class="topic topic-tracking" data-path-hover="M0,0 v105 c0,0,44-18,110-18 s110,18,110,18 V0 H0 z">
+        <h2 class="topic-title">{{ _('Tracking') }}</h2>
+        <a href="{{ url('teach.smarton.tracking') }}" class="inner">
+          <h3><del>{{ _('Follow me') }}</del></h3>
+          <p>{{ _('What you do online is your business, and you can keep it that way.') }}</p>
+        </a>
+        <svg class="shape" viewBox="0 0 220 300" width="100%" height="100%" preserveAspectRatio="none"><path fill="#ccc" d="M0,0 v210 c0,0,44,26,110,26 s110-26,110-26 V0 H0 z"/></svg>
+      </li>
+
+      <li class="topic topic-security" data-path-hover="M0,0 v105 c0,0,44-18,110-18 s110,18,110,18 V0 H0 z">
+        <h2 class="topic-title">{{ _('Cyber security') }}</h2>
+        <a href="{{ url('teach.smarton.security') }}" class="inner">
+          <h3>{{ _('Lock it down') }}</h3>
+          <p>{{ _('Look both ways, stay updated, and make sure your passwords are as buff as you are.') }}</p>
+        </a>
+        <svg class="shape" viewBox="0 0 220 300" width="100%" height="100%" preserveAspectRatio="none"><path fill="#ccc" d="M0,0 v210 c0,0,44,26,110,26 s110-26,110-26 V0 H0 z"/></svg>
+      </li>
+
+      <li class="topic topic-surveillance" data-path-hover="M0,0 v105 c0,0,44-18,110-18 s110,18,110,18 V0 H0 z">
+        <h2 class="topic-title">{{ _('Government surveillance') }}</h2>
+        <a href="{{ url('teach.smarton.surveillance') }}" class="inner">
+          <h3>{{ _('Take a stand') }}</h3>
+          <p>{{ _('Decide where you think the line should be – and keep others from crossing it.') }}</p>
+        </a>
+        <svg class="shape" viewBox="0 0 220 300" width="100%" height="100%" preserveAspectRatio="none"><path fill="#ccc" d="M0,0 v210 c0,0,44,26,110,26 s110-26,110-26 V0 H0 z"/></svg>
+      </li>
+    </ul>
+
+    <aside class="series-description">
+      <h2>{{ _('Smarter by the step') }}</h2>
+      <ol class="smarton-steps">
+        <li>{{ _('Ask') }}</li>
+        <li>{{ _('Know') }}</li>
+        <li>{{ _('Do') }}</li>
+        <li>{{ _('Chat') }}</li>
+      </ol>
+      <p>{{ _('Ask yourself what you think, find out what you don’t know, take control of your experience. Then talk it out with your friends.') }}</p>
+    </aside>
+
+  </div>
+</main>
+{% endblock %}
+
+{% block js %}
+  <!--[if !lte IE 8]><!-->
+    {% javascript 'smarton-landing' %}
+  <!--<![endif]-->
+{% endblock %}
