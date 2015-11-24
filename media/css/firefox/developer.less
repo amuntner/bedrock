@@ -90,9 +90,10 @@
     }
 }
 
-.android {
+.android,
+.ios {
     .download-button {
-        // hide download button on Android until download button is smarter
+        // hide download button on Android and iOS until download button is smarter
         display: none;
     }
     .intro h2 {
@@ -263,7 +264,7 @@
         .border-box();
         text-transform: uppercase;
     }
-    h3,
+    .form-title,
     .form-submit,
     .form-contents {
         width: auto;
@@ -309,7 +310,8 @@
         .span_narrow(5);
         padding-left: 0;
         padding-right: 0;
-        h3,
+
+        .form-title,
         .form-submit,
         .form-contents {
             width: auto;
@@ -358,7 +360,8 @@
         padding-left: 0;
         padding-right: 0;
         padding-top: 0;
-        h3,
+
+        .form-title,
         .form-submit,
         .form-contents {
             width: auto;

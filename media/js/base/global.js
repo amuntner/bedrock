@@ -61,7 +61,7 @@ function init_android_download_links() {
 
 // language switcher
 function init_lang_switcher() {
-    var $language = $('#language');
+    var $language = $('#page-language-select');
     var previousLanguage = $language.val();
     $language.change(function() {
 
@@ -124,6 +124,13 @@ function isFirefoxUpToDate(latest) {
 function isFirefoxMobile(userAgent) {
     var ua = userAgent || navigator.userAgent;
     return /Mobile|Tablet|Fennec/.test(ua);
+}
+
+// iOS does not follow same version numbers as desktop & Android, so may not be safe to
+// simply add this check to isFirefox. Will require further investigation/testing.
+function isFirefoxiOS(userAgent) {
+    var ua = userAgent || navigator.userAgent;
+    return /FxiOS/.test(ua);
 }
 
 // Detect Firefox ESR simply by the *non-ESR* build IDs, as a fallback of the channel detection by

@@ -121,6 +121,16 @@ redirectpatterns = (
     # bug 1121082
     redirect(r'^hello/?$', 'firefox.hello'),
 
+    # Bug 1186373
+    redirect(r'^firefox/hello/npssurvey/?$',
+             'https://www.surveygizmo.com/s3/2227372/Firefox-Hello-Product-Survey',
+             permanent=False),
+
+    # Bug 1221739
+    redirect(r'^firefox/hello/feedbacksurvey/?$',
+             'https://www.surveygizmo.com/s3/2319863/d2b7dc4b5687',
+             permanent=False),
+
     # bug 1148127
     redirect(r'^products/?$', 'firefox.family.index'),
 
@@ -153,7 +163,7 @@ redirectpatterns = (
              query={'id': 'org.mozilla.firefox_beta'}, merge_query=True),
 
     # bug 675031
-    redirect(r'^projects/fennec(?P<page>/.*)?',
+    redirect(r'^projects/fennec(?P<page>/[\/\w\.-]+)?',
              'http://website-archive.mozilla.org/www.mozilla.org/fennec_releasenotes/projects/fennec{page}'),
 
     # bug 876581
@@ -184,7 +194,7 @@ redirectpatterns = (
 
     # bug 858315
     redirect(r'^projects/devpreview/firstrun(?:/(?:index.html)?)?$', '/firefox/firstrun/'),
-    redirect(r'^projects/devpreview/(?P<page>.*)$',
+    redirect(r'^projects/devpreview/(?P<page>[\/\w\.-]+)?$',
              'http://website-archive.mozilla.org/www.mozilla.org/devpreview_releasenotes/projects/devpreview/{page}'),
 
     # bug 1001238, 1025056
@@ -204,7 +214,7 @@ redirectpatterns = (
 
     # bug 1041712, 1069335, 1069902
     redirect(r'^(?P<prod>firefox|mobile)/(?P<vers>([0-9]|1[0-9]|2[0-8])\.(\d+(?:beta|a2|\.\d+)?))'
-             r'/(?P<channel>release|aurora)notes/(?P<page>.*)$',
+             r'/(?P<channel>release|aurora)notes/(?P<page>[\/\w\.-]+)?$',
              'http://website-archive.mozilla.org/www.mozilla.org/firefox_releasenotes/en-US'
              '/{prod}/{vers}/{channel}notes/{page}'),
 
@@ -217,4 +227,18 @@ redirectpatterns = (
     # bug 1211907
     redirect(r'^firefox/independent/?$', 'firefox.new'),
     redirect(r'^firefox/personal/?$', 'firefox.new'),
+
+    # bug 845983
+    redirect(r'^metrofirefox(?P<path>/.*)?$', '/firefox{path}'),
+
+    # bug 1003703, 1009630
+    redirect(r'^firefox(?P<vers>/.+)/firstrun/eu/?$', '/firefox{vers}/firstrun/', query={
+        'utm_source': 'direct',
+        'utm_medium': 'none',
+        'utm_campaign': 'redirect',
+        'utm_content': 'eu-firstrun-redirect',
+    }),
+
+    # bug 960543
+    redirect(r'^firefox/(?P<vers>[23])\.0/eula', '/legal/eula/firefox-{vers}/'),
 )

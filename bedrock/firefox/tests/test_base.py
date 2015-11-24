@@ -18,7 +18,7 @@ from nose.tools import eq_, ok_
 from pyquery import PyQuery as pq
 
 from bedrock.firefox import views as fx_views
-from bedrock.firefox.firefox_details import FirefoxDesktop, FirefoxAndroid
+from bedrock.firefox.firefox_details import FirefoxDesktop, FirefoxAndroid, FirefoxIOS
 from bedrock.firefox.utils import product_details
 from bedrock.mozorg.tests import TestCase
 
@@ -29,6 +29,7 @@ GOOD_PLATS = {'Windows': {}, 'OS X': {}, 'Linux': {}}
 
 firefox_desktop = FirefoxDesktop(json_dir=PROD_DETAILS_DIR)
 firefox_android = FirefoxAndroid(json_dir=PROD_DETAILS_DIR)
+firefox_ios = FirefoxIOS(json_dir=PROD_DETAILS_DIR)
 
 
 class TestInstallerHelp(TestCase):
@@ -361,6 +362,18 @@ class TestWhatsNew(TestCase):
 
     # end 38.0.5 whatsnew tests
 
+    # begin 42.0 whatsnew tests
+
+    @override_settings(DEV=True)
+    def test_fx_42_0(self, render_mock):
+        """Should use tracking protection whatsnew template for 42.0"""
+        req = self.rf.get('/en-US/firefox/whatsnew/')
+        self.view(req, version='42.0')
+        template = render_mock.call_args[0][1]
+        eq_(template, ['firefox/whatsnew_42/variant-a.html'])
+
+    # end 42.0 whatsnew tests
+
     @override_settings(DEV=True)
     def test_older_whatsnew(self, render_mock):
         """Should show default no tour template for 35 and below"""
@@ -594,15 +607,6 @@ class TestFirstRun(TestCase):
         self.view(req, version='40.0')
         template = render_mock.call_args[0][1]
         eq_(template, ['firefox/australis/fx40/firstrun.html'])
-
-    @override_settings(DEV=True)
-    @patch.object(waffle, 'switch_is_active', Mock(return_value=False))
-    def test_fx_firstrun_40_0_prelaunch(self, render_mock):
-        """Should use fx38.0.5 firstrun template for 40.0 when switch is False"""
-        req = self.rf.get('/en-US/firefox/firstrun/')
-        self.view(req, version='40.0')
-        template = render_mock.call_args[0][1]
-        eq_(template, ['firefox/australis/fx38_0_5/firstrun.html'])
 
     @override_settings(DEV=False)
     def test_fx_australis_secure_redirect(self, render_mock):

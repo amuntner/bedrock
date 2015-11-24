@@ -107,6 +107,7 @@ h1, h2, h3, h4, h5, h6 {
     padding: 20px 0;
     border: 0;
     background: #565a5c;
+    color: #fff;
 
     header {
         position: relative;
@@ -189,7 +190,8 @@ h1, h2, h3, h4, h5, h6 {
             }
         }
 
-        .os_android .download-subtitle {
+        .os_android .download-subtitle,
+        .os_ios .download-subtitle {
             .font-size(@largeFontSize);
             margin-right: 0px;
             text-align: center;
@@ -685,10 +687,13 @@ h1, h2, h3, h4, h5, h6 {
     border-bottom: none;
     box-shadow: none;
 
-    h3 {
-        display: block;
-        float: none;
+    .form-title {
         width: auto;
+        float: none;
+        margin: 0;
+    }
+
+    h3 {
         padding: (@baseLine * 2) 0;
         color: @textColorSecondary;
         .font-size(46px);
@@ -993,7 +998,7 @@ h1, h2, h3, h4, h5, h6 {
 
     #mozorg-newsletter-form,
     #newsletter-form {
-        h3 {
+        .form-title {
             float: none;
             width: auto;
             padding: (@baseLine * 2) 0;

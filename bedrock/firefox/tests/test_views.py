@@ -256,31 +256,25 @@ class TestWin10WelcomeView(TestCase):
         view = views.Win10Welcome()
         view.request = RequestFactory().get('/?v=1')
         view.request.locale = 'en-US'
-        eq_(view.get_template_names(), ['firefox/win10_variants/variant-1.html'])
+        eq_(view.get_template_names(), ['firefox/win10_variants/variant-2-1.html'])
 
     def test_get_template_names_variant_2(self):
         view = views.Win10Welcome()
         view.request = RequestFactory().get('/?v=2')
         view.request.locale = 'en-US'
-        eq_(view.get_template_names(), ['firefox/win10_variants/variant-2.html'])
+        eq_(view.get_template_names(), ['firefox/win10_variants/variant-2-2.html'])
 
     def test_get_template_names_variant_3(self):
         view = views.Win10Welcome()
         view.request = RequestFactory().get('/?v=3')
         view.request.locale = 'en-US'
-        eq_(view.get_template_names(), ['firefox/win10_variants/variant-3.html'])
+        eq_(view.get_template_names(), ['firefox/win10_variants/variant-2-3.html'])
 
     def test_get_template_names_variant_4(self):
         view = views.Win10Welcome()
         view.request = RequestFactory().get('/?v=4')
         view.request.locale = 'en-US'
-        eq_(view.get_template_names(), ['firefox/win10_variants/variant-4.html'])
-
-    def test_get_template_names_variant_5(self):
-        view = views.Win10Welcome()
-        view.request = RequestFactory().get('/?v=5')
-        view.request.locale = 'en-US'
-        eq_(view.get_template_names(), ['firefox/win10_variants/variant-5.html'])
+        eq_(view.get_template_names(), ['firefox/win10_variants/variant-2-4.html'])
 
     def test_get_template_names_non_en(self):
         view = views.Win10Welcome()
@@ -319,10 +313,19 @@ class TestFirefoxOSGeoRedirect(TestCase):
         self.geo_mock = patcher.start()
         self.addCleanup(patcher.stop)
 
-    def _request(self, country):
+    def _request(self, country, locale='de'):
         self.geo_mock.return_value = country
         request = RequestFactory().get('/firefox/os/')
+        request.locale = locale
         return views.firefox_os_geo_redirect(request)
+
+    def test_en_US_always_2_dot_5(self):
+        """The en-US locale should always redirect to 2.5"""
+        resp = self._request('AU', locale='en-US')
+        self.assertTrue(resp['Location'].endswith('/firefox/os/2.5/'))
+
+        resp = self._request('IN', locale='en-US')
+        self.assertTrue(resp['Location'].endswith('/firefox/os/2.5/'))
 
     def test_default_version(self):
         """Should redirect to default version if country not in list."""

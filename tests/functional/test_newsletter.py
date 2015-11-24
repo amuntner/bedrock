@@ -5,9 +5,10 @@
 import pytest
 from selenium.common.exceptions import TimeoutException
 
-from ..pages.newsletter import NewsletterPage
+from pages.newsletter import NewsletterPage
 
 
+@pytest.mark.sanity
 @pytest.mark.nondestructive
 def test_default_values(base_url, selenium):
     page = NewsletterPage(base_url, selenium).open()
